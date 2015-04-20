@@ -40,20 +40,19 @@ class shortenApp (webapp.webApp):
                             + str(self.dic_url_num.keys()) + "</body></html>")
             else:
                 try:
-                    res = int(res[1:])
+                    res = int(res.split('/')[1])
                     if res not in self.dic_url_num:
                         httpCode = "404 Not found"
                         htmlBody = ("<html><body>"
                                     + "HTTP Error: Recurso no disponible"
                                     + "</body></html>")
                     else:
-                        httpCode = ('301 Redirect\nLocation: '
-                                    + "http://localhost:1234"
-                                    + str(self.dic_url_num[res]))
+                        httpCode = ("300 Multiple Choices\nLocation: " +
+                                    self.dic_url_num[res])
                         htmlBody = ("<html><body>" + "<a href="
                                     + "http://localhost:1234"
-                                    + str(self.dic_url_num[res]) +
-                                    + "</href></br>" + "</body></html>")
+                                    + str(self.dic_url[res])
+                                    + "</href></body></html>")
                 except ValueError:
                     httpCode = "404 Not Found"
                     htmlBody = ("<html><body>" + "Error 404: Not found"
@@ -76,7 +75,7 @@ class shortenApp (webapp.webApp):
             htmlBody = ("<html><body>" + "URL buscada: "
                         + "<a href=" + url + ">" + url + "</href></br>"
                         + "URL acortada: " + "<a href=" + str(self.num) + ">"
-                        + str(self.num) + "</href></br>" + "</boy></html>")
+                        + str(self.num) + "</href></br>" + "</body></html>")
         return (httpCode, htmlBody)
 
 
